@@ -6,10 +6,10 @@
 //
 
 struct RandomNumber {
-    var minimumValue: Int
-    var maximumValue: Int
+    let minimumNumber: Int
+    let maximumNumber: Int
     
     var getRandomNumber: Int {
-        Int.random(in: minimumValue...maximumValue)
+        Int.random(in: minimumNumber...maximumNumber)
     }
 }

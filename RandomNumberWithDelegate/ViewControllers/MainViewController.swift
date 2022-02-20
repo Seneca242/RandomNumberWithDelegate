@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SettingsViewControllerDelegate {
-    func setNewValues(for randomNumber: RandomNumber)
+    func setNewValue(for randomValue: RandomNumber)
 }
 
 class MainViewController: UIViewController {
@@ -20,11 +20,15 @@ class MainViewController: UIViewController {
     
     @IBOutlet var getResultButton: UIButton!
     
-    private var randomNumber = RandomNumber(minimumValue: 0, maximumValue: 100)
+    private var randomNumber = RandomNumber(
+        minimumNumber: 0,
+        maximumNumber: 100
+    )
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getResultButton.layer.cornerRadius = 10
+       
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -40,10 +44,11 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: SettingsViewControllerDelegate {
-    func setNewValues(for randomNumber: RandomNumber) {
-        minimumValueLabel.text = String(randomNumber.minimumValue)
-        maximumValueLabel.text = String(randomNumber.maximumValue)
-        self.randomNumber = randomNumber
+    func setNewValue(for randomValue: RandomNumber) {
+        minimumValueLabel.text = String(randomValue.minimumNumber)
+        maximumValueLabel.text = String(randomValue.maximumNumber)
+        randomNumber = randomValue
+        
     }
     
     
