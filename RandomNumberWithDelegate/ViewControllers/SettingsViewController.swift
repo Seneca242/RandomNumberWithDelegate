@@ -8,7 +8,7 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    
     @IBOutlet var minimumValueTF: UITextField!
     @IBOutlet var maximumValueTF: UITextField!
     
@@ -17,27 +17,51 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        minimumValueTF.text = String(randomNumber.minimumNumber)
-        maximumValueTF.text = String(randomNumber.maximumNumber)
+        minimumValueTF.text = String(randomNumber.minimumValue)
+        maximumValueTF.text = String(randomNumber.maximumValue)
+        minimumValueTF.delegate = self
+        maximumValueTF.delegate = self
         
     }
     
     @IBAction func saveButtonPressed() {
-        delegate.setNewValue(for: randomNumber)
+//        view.endEditing(true)
+        delegate.setNewValue(with: randomNumber)
         dismiss(animated: true)
     }
     
     @IBAction func cancelButtonPressed() {
-       dismiss(animated: true)
+        dismiss(animated: true)
     }
+    
+    
 }
 
 extension SettingsViewController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        let newValue = textField.text else { return }
-        let intNewValue = Int(newValue) else { return }
-        
-        if textField =
-    }
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//
+//        guard let newValue = textField.text else { return }
+//        guard let intNewValue = Int(newValue) else { return }
+//
+//        if textField == minimumValueTF {
+//            randomNumber.minimumValue = intNewValue
+//        } else {
+//            randomNumber.maximumValue = intNewValue
+//        }
+//    }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        guard let newValue = textField.text else { return false }
+        guard let intNewValue = Int(newValue) else { return false }
+        
+        if textField == minimumValueTF {
+            randomNumber.minimumValue = intNewValue
+            maximumValueTF.becomeFirstResponder()
+        } else if textField == maximumValueTF {
+            randomNumber.maximumValue = intNewValue
+            saveButtonPressed()
+        }
+        return true
+    }
 }
